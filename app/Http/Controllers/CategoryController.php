@@ -29,7 +29,7 @@ class CategoryController extends Controller
     {
         $data = $request->all();
         Category::create($data);
-        return redirect()->route('category.index');
+        return redirect()->route('category.index')->with('success', 'Category created successfully');
     }
 
     // // show
@@ -51,7 +51,7 @@ class CategoryController extends Controller
         $data = $request->all();
         $category = Category::findOrFail($id);
         $category->update($data);
-        return redirect()->route('category.index');
+        return redirect()->route('category.index')->with('success', 'Category updated successfully');
     }
 
     // destroy
@@ -59,6 +59,6 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->delete();
-        return redirect()->route('category.index');
+        return redirect()->route('category.index')->with('success', 'Category deleted successfully');
     }
 }

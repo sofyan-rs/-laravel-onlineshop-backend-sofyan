@@ -39,7 +39,8 @@ class ProductController extends Controller
         $product->category_id = $request->category_id;
         $product->image = $filename;
         $product->save();
-        return redirect()->route('product.index');
+
+        return redirect()->route('product.index')->with('success', 'Product created successfully');
     }
 
     // // // show
@@ -75,7 +76,7 @@ class ProductController extends Controller
         $product->image = $filename;
         $product->update();
 
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('success', 'Product updated successfully');
     }
 
     // destroy
@@ -83,6 +84,6 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->delete();
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('success', 'Product deleted successfully');
     }
 }

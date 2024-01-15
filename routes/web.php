@@ -22,8 +22,12 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    // Dashboard
     Route::resource('dashboard', DashboardController::class);
+    // Users
     Route::resource('user', UserController::class);
+    // Categories
     Route::resource('category', CategoryController::class);
+    // Products
     Route::resource('product', ProductController::class);
 });
