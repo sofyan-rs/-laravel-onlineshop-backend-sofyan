@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -21,7 +22,7 @@ class ProductController extends Controller
     // create
     public function create()
     {
-        $categories = \App\Models\Category::all();
+        $categories = Category::all();
         return view('pages.product.create', compact('categories'));
     }
 
@@ -51,12 +52,15 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        return view('pages.product.edit', compact('product'));
+        $categories = Category::all();
+        return view('pages.product.edit', compact('product', 'categories'));
     }
 
     // update
     public function update(Request $request, $id)
     {
+        $product = Product::findOrFail($id);
+
         if ($request->image) {
             $filename = time() . '.' . $request->image->extension();
             $request->image->storeAs('public/products', $filename);
@@ -64,13 +68,12 @@ class ProductController extends Controller
             $filename = $request->old_image;
         }
 
-        $product = new Product;
         $product->name = $request->name;
         $product->price = (int) $request->price;
         $product->stock = (int) $request->stock;
         $product->category_id = $request->category_id;
         $product->image = $filename;
-        $product->save();
+        $product->update();
 
         return redirect()->route('product.index');
     }
