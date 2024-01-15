@@ -13,8 +13,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         // get users with pagination
-        $users = DB::table('users')
-            ->where('name', 'like', '%'.$request->search.'%')
+        $users = User::where('name', 'like', '%'.$request->search.'%')
             ->paginate(10);
         return view('pages.user.index', compact('users'));
     }

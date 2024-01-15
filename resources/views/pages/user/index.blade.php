@@ -30,7 +30,8 @@
                             <div class="card-body">
                                 <form method="GET" action="{{ route('user.index') }}">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search" name="search">
+                                        <input type="text" class="form-control" placeholder="Search" name="search"
+                                            value="{{ request()->query('search') }}">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
@@ -63,7 +64,7 @@
                                                     <span
                                                         class="badge {{ $user->roles === 'ADMIN' ? 'badge-primary' : 'badge-light' }}">{{ $user->roles }}</span>
                                                 </td>
-                                                <td>{{ $user->created_at }}</td>
+                                                <td>{{ $user->created_at->format('d M Y, H:i') }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href='{{ route('user.edit', $user->id) }}'
@@ -71,8 +72,8 @@
                                                             <i class="fas fa-edit"></i>
                                                             Edit
                                                         </a>
-                                                        <form action="{{ route('user.destroy', $user->id) }}" method="POST"
-                                                            class="ml-2">
+                                                        <form action="{{ route('user.destroy', $user->id) }}"
+                                                            method="POST" class="ml-2">
                                                             <input type="hidden" name="_method" value="DELETE" />
                                                             <input type="hidden" name="_token"
                                                                 value="{{ csrf_token() }}" />

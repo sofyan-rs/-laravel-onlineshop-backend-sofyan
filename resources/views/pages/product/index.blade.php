@@ -27,7 +27,8 @@
                             <div class="card-body">
                                 <form method="GET" action="{{ route('product.index') }}">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search" name="search">
+                                        <input type="text" class="form-control" placeholder="Search" name="search"
+                                            value="{{ request()->query('search') }}">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
@@ -39,10 +40,10 @@
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
+                                            <th class="text-center">Image</th>
                                             <th>Name</th>
                                             <th>Category</th>
                                             {{-- <th>Description</th> --}}
-                                            {{-- <th>Image</th> --}}
                                             <th>Price</th>
                                             <th>Stock</th>
                                             <th>Created At</th>
@@ -50,6 +51,17 @@
                                         </tr>
                                         @foreach ($products as $product)
                                             <tr>
+                                                <td>
+                                                    <div class="d-flex justify-content-center p-2">
+                                                        <?php if ($product->image): ?>
+                                                        <img class="border rounded-circle"
+                                                            src="{{ asset('storage/products/' . $product->image) }}"
+                                                            alt="{{ $product->name }}" width="60px" />
+                                                        <?php else: ?>
+                                                        No Image
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </td>
                                                 <td>{{ $product->name }}
                                                 </td>
                                                 <td>
@@ -57,17 +69,16 @@
                                                 </td>
                                                 {{-- <td>
                                                     {{ $product->description }}
-                                                </td>
-                                                <td>
-                                                    {{ $product->image }}
                                                 </td> --}}
                                                 <td>
-                                                    {{ $product->price }}
+                                                    {{ 'Rp ' . number_format($product->price, 0, ',', '.') }}
                                                 </td>
                                                 <td>
                                                     {{ $product->stock }}
                                                 </td>
-                                                <td>{{ $product->created_at }}</td>
+                                                <td>
+                                                    {{ $product->created_at->format('d M Y, H:i') }}
+                                                </td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href='{{ route('product.edit', $product->id) }}'

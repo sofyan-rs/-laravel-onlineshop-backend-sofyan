@@ -27,7 +27,8 @@
                             <div class="card-body">
                                 <form method="GET" action="{{ route('category.index') }}">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search" name="search">
+                                        <input type="text" class="form-control" placeholder="Search" name="search"
+                                            value="{{ request()->query('search') }}">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary"><i class="fas fa-search"></i></button>
                                         </div>
@@ -55,7 +56,9 @@
                                                 {{-- <td>
                                                     {{ $category->image }}
                                                 </td> --}}
-                                                <td>{{ $category->created_at }}</td>
+                                                <td>
+                                                    {{ $category->created_at->format('d M Y, H:i') }}
+                                                </td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href='{{ route('category.edit', $category->id) }}'
